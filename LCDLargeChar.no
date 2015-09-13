@@ -1,0 +1,115 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+String strLarge = "1234";
+
+byte cc1[8] = {0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F}; //FULL
+byte cc2[8] = {0x00, 0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F}; // Lower half
+byte cc3[8] = {0x1F, 0x1F, 0x1F, 0x1F, 0x00, 0x00, 0x00, 0x00}; // Upper half
+byte cc4[8] = {0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01}; // 1 Right
+byte cc5[8] = {0x1C, 0x1C, 0x1C, 0x1C, 0x1C, 0x1C, 0x1C, 0x1C}; // 3 Left
+
+LiquidCrystal_I2C lcd(0x27, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);  // Set the LCD I2C address
+
+void setup()
+{
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
+
+  lcd.begin(20, 4);
+
+  lcd.createChar(0, cc1);
+  lcd.createChar(1, cc2);
+  lcd.createChar(2, cc3);
+  lcd.createChar(3, cc4);
+  lcd.createChar(4, cc5);
+
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  doNumber(2, 0);
+  doNumber(3, 4);
+  doNumber(4, 8);
+  doNumber(6, 12);
+} // setup
+
+void loop()
+{
+
+} // loop
+
+
+void WCC(byte number) {
+  lcd.write((uint8_t)number);
+}
+void doNumber(byte num, byte c) {
+  switch (num) {
+    case 0:
+      lcd.setCursor(c, 0); WCC(0); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(0); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 2); WCC(0); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(0); WCC(1); WCC(1); WCC(0);
+      break;
+    case 1:
+      lcd.setCursor(c, 0); WCC(32); WCC(0); WCC(4); WCC(32);
+      lcd.setCursor(c, 1); WCC(32); WCC(3); WCC(4); WCC(32);
+      lcd.setCursor(c, 2); WCC(32); WCC(3); WCC(4); WCC(32);
+      lcd.setCursor(c, 3); WCC(32); WCC(3); WCC(4); WCC(32);
+      break;
+    case 2:
+      lcd.setCursor(c, 0); WCC(2); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 2); WCC(32); WCC(1); WCC(2); WCC(32);
+      lcd.setCursor(c, 3); WCC(0); WCC(1); WCC(1); WCC(1);
+      break;
+    case 3:
+      lcd.setCursor(c, 0); WCC(2); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(1); WCC(1); WCC(1); WCC(0);
+      lcd.setCursor(c, 2); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(1); WCC(1); WCC(1); WCC(0);
+      break;
+    case 4:
+      lcd.setCursor(c, 0); WCC(0); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 1); WCC(0); WCC(1); WCC(1); WCC(0);
+      lcd.setCursor(c, 2); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(32); WCC(32); WCC(32); WCC(0);
+      break;
+    case 5:
+      lcd.setCursor(c, 0); WCC(0); WCC(2); WCC(2); WCC(2);
+      lcd.setCursor(c, 1); WCC(0); WCC(1); WCC(1); WCC(1);
+      lcd.setCursor(c, 2); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(1); WCC(1); WCC(1); WCC(0);
+      break;
+    case 6:
+      lcd.setCursor(c, 0); WCC(0); WCC(2); WCC(2); WCC(2);
+      lcd.setCursor(c, 1); WCC(0); WCC(1); WCC(1); WCC(1);
+      lcd.setCursor(c, 2); WCC(0); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(0); WCC(1); WCC(1); WCC(0);
+      break;
+    case 7:
+      lcd.setCursor(c, 0); WCC(2); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 2); WCC(32); WCC(32); WCC(0); WCC(32);
+      lcd.setCursor(c, 3); WCC(32); WCC(0); WCC(32); WCC(32);
+      break;
+    case 8:
+      lcd.setCursor(c, 0); WCC(0); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(0); WCC(1); WCC(1); WCC(0);
+      lcd.setCursor(c, 2); WCC(0); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(0); WCC(1); WCC(1); WCC(0);
+      break;
+    case 9:
+      lcd.setCursor(c, 0); WCC(0); WCC(2); WCC(2); WCC(0);
+      lcd.setCursor(c, 1); WCC(0); WCC(1); WCC(1); WCC(0);
+      lcd.setCursor(c, 2); WCC(32); WCC(32); WCC(32); WCC(0);
+      lcd.setCursor(c, 3); WCC(1); WCC(1); WCC(1); WCC(0);
+      break;
+    case 10:
+      lcd.setCursor(c, 0); WCC(1); WCC(1);
+      lcd.setCursor(c, 1); WCC(2); WCC(2);
+      lcd.setCursor(c, 2); WCC(1); WCC(1);
+      lcd.setCursor(c, 3); WCC(2); WCC(2);
+      break;
+  } // switch
+}
+
+
